@@ -22,6 +22,8 @@ class PngProcessor(ImageProcessor):
                     channels += 1
                 self.calculate_palette(rows, channels)
             self.colors_count = len(self.__colors)
+            if len(self.__colors) < 16:
+                self.colors_count = 16
 
     def calculate_palette(self, rows, channels):
         colors = set()

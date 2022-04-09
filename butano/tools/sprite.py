@@ -1,3 +1,8 @@
+import subprocess
+import re
+
+from util import get_processor, remove_file, compression_label, validate_compression
+
 
 class SpriteItem:
 
@@ -69,12 +74,19 @@ class SpriteItem:
             height = int(info['height'])
         except KeyError:
             raise ValueError('height field not found in graphics json file: ' + file_name_no_ext + '.json')
+        try:
+            width = int(info['width'])
+        except KeyError:
+            width = height
 
         if bmp.height % height:
             raise ValueError('File height is not divisible by item height: ' + str(bmp.height) + ' - ' + str(height))
 
-        self.__graphics = int(bmp.height / height)
-        self.__shape, self.__size = SpriteItem.shape_and_size(bmp.width, height)
+        if bmp.width % width:
+            raise ValueError('File width is not divisible by item width: ' + str(bmp.width) + ' - ' + str(width))
+
+        self.__graphics = int(bmp.height / height) * int(bmp.width / width)
+        self.__shape, self.__size = SpriteItem.shape_and_size(width, height)
 
         try:
             self.__tiles_compression = info['tiles_compression']

@@ -1,3 +1,10 @@
+
+import subprocess
+import re
+
+from util import get_processor, remove_file, compression_label, validate_compression
+
+
 class BgPaletteItem:
 
     def __init__(self, file_path, file_name_no_ext, build_folder_path, info):

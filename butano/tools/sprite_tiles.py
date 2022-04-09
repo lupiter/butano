@@ -1,4 +1,9 @@
 
+import subprocess
+import re
+
+from util import get_processor, remove_file, compression_label, validate_compression
+
 class SpriteTilesItem:
 
     @staticmethod
